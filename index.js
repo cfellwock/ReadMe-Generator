@@ -1,18 +1,15 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer')
 const fs = require('fs')
-const generateMarkDown = require('./utils')
-
-const { default: inquirer } = require("inquirer");
-const { resolve } = require('path');
+const generateMarkDown = require('./utils/generateMarkdown')
 
 
 // TODO: Create an array of questions for user input
 const questions = [
     {
         type: 'input',
-        name: 'Project Title',
-        message: "What is your project's name?"
+        name: 'title',
+        message: "What is your project's name?",
         validate: titleInput => {
             if (titleInput) {
                 return true;
@@ -25,8 +22,8 @@ const questions = [
 
     {
         type: 'input',
-        name: 'Installation Instructions',
-        message: "How do you install this project?"
+        name: 'installation',
+        message: "How do you install this project?",
         validate: installationInput => {
             if (installationInput) {
                 return true;
@@ -39,8 +36,8 @@ const questions = [
 
     {
         type: 'input',
-        name: 'Usage Instructions',
-        message: "How do you use this project?"
+        name: 'usage',
+        message: "How do you use this project?",
         validate: usageInput => {
             if (usageInput) {
                 return true;
@@ -53,8 +50,8 @@ const questions = [
 
     {
         type: 'input',
-        name: 'Contribution Guidelines',
-        message: "How can others contribute to this project?"
+        name: 'contribution',
+        message: "How can others contribute to this project?",
         validate: contirubitonInput => {
             if (contirubitonInput) {
                 return true;
@@ -67,8 +64,8 @@ const questions = [
 
     {
         type: 'input',
-        name: 'Test Instructions',
-        message: "How can others test this project?"
+        name: 'test',
+        message: "How can others test this project?",
         validate: testInput => {
             if (testInput) {
                 return true;
@@ -81,8 +78,8 @@ const questions = [
 
     {
         type: 'input',
-        name: 'Licenses',
-        message: "Which licenses does this project use?"
+        name: 'licenses',
+        message: "Which licenses does this project use?",
         choices: ['None', 'Apache 2.0', 'MIT', 'GPL v3.0'],
         validate: licenseInput => {
             if (licenseInput) {
@@ -96,8 +93,8 @@ const questions = [
 
     {
         type: 'input',
-        name: 'GitHub Username',
-        message: "What is your GitHub username?"
+        name: 'username',
+        message: "What is your GitHub username?",
         validate: githubInput => {
             if (githubInput) {
                 return true;
@@ -110,8 +107,8 @@ const questions = [
 
     {
         type: 'input',
-        name: 'Email Address',
-        message: "What is your emailAddress?"
+        name: 'email',
+        message: "What is your emailAddress?",
         validate: emailInput => {
             if (emailInput) {
                 return true;
@@ -121,23 +118,30 @@ const questions = [
             }
         }
     },
-
 ];
 
 // TODO: Create a function to write README file
-function writeToFile(fileContent) => {
-    return new Promise ((resolve, reject) => {
-        fs.writeFile(
-
-    })
+function writeToFile(fileName, answerData) {
+    // promise here
+    return fs.writeFile(fileName, answerData,  (err) => { 
+        if (err) { 
+          console.log(err); 
+        }})
+      
 }
 
 // TODO: Create a function to initialize app
 function init() {
-    inquirer.prompt(questions, answers) => (
-        .then(function(answers))
-    )
+    inquirer.prompt(questions) 
+        .then(function(data){
+            writeToFile("generatedREADME.md", generateMarkDown(data))
+        })
+    .catch(error => {
+        console.log(error)
+    })
 }
+
+
 
 // Function call to initialize app
 init();
