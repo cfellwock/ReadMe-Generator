@@ -133,14 +133,13 @@ function writeToFile(fileName, answerData) {
 // TODO: Create a function to initialize app
 function init() {
     inquirer.prompt(questions) 
-        .then(function(data){
+        .then(function(data) {
             writeToFile("generatedREADME.md", generateMarkDown(data))
         })
     .catch(error => {
         console.log(error)
     })
 }
-
 
 
 // Function call to initialize app
