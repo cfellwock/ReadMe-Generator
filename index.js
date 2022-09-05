@@ -108,7 +108,7 @@ const questions = [
     {
         type: 'input',
         name: 'email',
-        message: "What is your emailAddress?",
+        message: "What is your email address?",
         validate: emailInput => {
             if (emailInput) {
                 return true;
